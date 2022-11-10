@@ -1,7 +1,4 @@
 **This section codes up time of day for waiting time - replace the path in the cd command to the path where you stored the downloaded data files from the ATUS. This do file assumes all data files are stored in the same path.
-cd "C:\\atusdata0319"
-clear all
-set more off
 use "atusact0319.dta"
 /*
 Codes for waiting: waiting_hhchedu = 030204; waiting_hhchhth = 030303; waiting_hhadcare = 030405; waiting_hhadults = 030504; waiting_nonhhchedu = 040204; waiting_nonhhchhlth = 040303; waiting_nonhhadult = 040405; waiting_nonhhadhlp = 040508; waiting_class = 060103; waiting_educadmin = 060403; waiting_shopping = 070105; waiting_childcare = 080102; waiting_finance = 080203; waiting_legal = 080302; waiting_medical = 080403; waiting_personalcare = 080502; waiting_hhservice = 090104; waiting_hmaint = 090202; waiting_gov = 100381; waiting_civic = 100383; waiting_gov_undef = 100399
@@ -221,3 +218,4 @@ replace any_wait_af = 1 if waiting_af > 0
 gen any_wait_ev = 0
 replace any_wait_ev = 1 if waiting_ev > 0
 save "atusall0319.dta", replace
+clear all
