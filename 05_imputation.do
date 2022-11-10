@@ -1,5 +1,5 @@
 /*
-Title: R3 Imputation For Waiting Time Paper
+Title: Imputation For Waiting Time Paper
 Author: Stephen B. Holt
 */
 use "CPS_ASEC_selectvars_timeinequality.dta"
