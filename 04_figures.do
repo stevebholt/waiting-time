@@ -7,7 +7,7 @@ local demos  black native asian pacisl multi otherrc hisp age female
 local edu hsdip somcol coldeg unemployed
 local family married hhchild yngchild
 
-/*
+
 ** Figure 1
 reg waiting_meds_nz i.hiloinc metro travel_all worktime unemployed `family' `timex' [pweight=tufnwgtp], cluster(gestfips)
 margins i.hiloinc, post
@@ -90,7 +90,7 @@ est sto evhi
 coefplot (amlo, fcolor(gs5) finten(20) lcolor(black) keep(_cons) offset(-0.5) label("Morning (5 am to 10:59 am)")) (lulo, fcolor(gs5) finten(40) lcolor(black) keep(_cons) offset(-0.2) label("Lunch (11 am to 1:59 pm)")) (aflo, fcolor(gs5) finten(60) lcolor(black) keep(_cons) offset(0.1) label("Afternoon (2 pm to 5:59 pm)")) (evlo, fcolor(gs5) finten(80) lcolor(black) keep(_cons) offset(0.4) label("Evening (6 pm to 12 am)")), bylabel("Low-income")||(amhi, fcolor(gs5) finten(20) lcolor(black) keep(_cons) offset(-0.5) label("Morning (5 am to 10:59 am)")) (luhi, fcolor(gs5) finten(40) lcolor(black) keep(_cons) offset(-0.2) label("Lunch (11 am to 1:59 pm)")) (afhi, fcolor(gs5) finten(60) lcolor(black) keep(_cons) offset(0.1) label("Afternoon (2 pm to 5:59 pm)")) (evhi, fcolor(gs5) finten(80) lcolor(black) keep(_cons) offset(0.4) label("Evening (6 pm to 12 am)")), bylabel("High-income")||, recast(bar) barw(.20) xlabel("") xtitle("") title("") ytitle("Minutes Spent Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(5)65) 
 
 graph export "figures\fig5.pdf", as(pdf)   replace
-*/
+
 
 **Figure SI 1
 reg any_time i.hilowfemale metro travel_all worktime unemployed `timex' [pweight=tufnwgtp], cluster(gestfips)
