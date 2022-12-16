@@ -17,7 +17,7 @@ reg waiting_meds_nz i.hiloinc `timex' [pweight=tufnwgtp], cluster(gestfips)
 margins i.hiloinc, post
 est sto mednc
 
-coefplot (mednc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(medc, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls")||, recast(bar) barw(.60) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(5)55) nooffset
+coefplot (mednc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(medc, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls")||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(5)55) nooffset
 
 graph export "figures\fig1.pdf", as(pdf)   replace
 
@@ -30,7 +30,7 @@ reg waiting_shopping_nz i.hiloinc `timex' [pweight=tufnwgtp], cluster(gestfips)
 margins i.hiloinc, post
 est sto shopnc
 
-coefplot (shopnc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(shopc, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls")||, recast(bar) barw(.60) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(5)55) nooffset
+coefplot (shopnc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(shopc, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls")||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(5)55) nooffset
 
 graph export "figures\fig2.pdf", as(pdf)   replace
 
@@ -43,7 +43,7 @@ reg any_waiting i.race_cat metro unemployed travel_all worktime `family' `timex'
 margins i.race_cat, post
 est sto hirace
 
-coefplot (lowrace, fcolor(gs5) finten(80) lcolor(black)), bylabel("Low-income") || (hirace, fcolor(gs5) finten(80) lcolor(black)), bylabel("High-income") ||, recast(bar) barw(.40) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(.05).2) nooffset
+coefplot (lowrace, fcolor(gs5) finten(80) lcolor(black)), bylabel("Low-income") || (hirace, fcolor(gs5) finten(80) lcolor(black)), bylabel("High-income") ||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(.05).2) nooffset
 
 graph export "figures\fig3.pdf", as(pdf)   replace
 
@@ -56,7 +56,7 @@ reg waiting_all_nz i.race_cat metro unemployed travel_all worktime `family' `tim
 margins i.race_cat, post
 est sto hirace
 
-coefplot (lowrace, fcolor(gs5) finten(80) lcolor(black)), bylabel("Low-income") || (hirace, fcolor(gs5) finten(80) lcolor(black)), bylabel("High-income") ||, recast(bar) barw(.40) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting; T| T>0") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(5)70) nooffset
+coefplot (lowrace, fcolor(gs5) finten(80) lcolor(black)), bylabel("Low-income") || (hirace, fcolor(gs5) finten(80) lcolor(black)), bylabel("High-income") ||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting; T| T>0") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(5)70) nooffset
 
 graph export "figures\fig4.pdf", as(pdf)   replace
 
@@ -87,7 +87,7 @@ reg waiting_ev_nz i.tuyear i.tumonth [pweight=tufnwgtp] if hiloinc == 2 & wkend 
 margins, post
 est sto evhi
 
-coefplot (amlo, fcolor(gs5) finten(20) lcolor(black) keep(_cons) offset(-0.5) label("Morning (5 am to 10:59 am)")) (lulo, fcolor(gs5) finten(40) lcolor(black) keep(_cons) offset(-0.2) label("Lunch (11 am to 1:59 pm)")) (aflo, fcolor(gs5) finten(60) lcolor(black) keep(_cons) offset(0.1) label("Afternoon (2 pm to 5:59 pm)")) (evlo, fcolor(gs5) finten(80) lcolor(black) keep(_cons) offset(0.4) label("Evening (6 pm to 12 am)")), bylabel("Low-income")||(amhi, fcolor(gs5) finten(20) lcolor(black) keep(_cons) offset(-0.5) label("Morning (5 am to 10:59 am)")) (luhi, fcolor(gs5) finten(40) lcolor(black) keep(_cons) offset(-0.2) label("Lunch (11 am to 1:59 pm)")) (afhi, fcolor(gs5) finten(60) lcolor(black) keep(_cons) offset(0.1) label("Afternoon (2 pm to 5:59 pm)")) (evhi, fcolor(gs5) finten(80) lcolor(black) keep(_cons) offset(0.4) label("Evening (6 pm to 12 am)")), bylabel("High-income")||, recast(bar) barw(.20) xlabel("") xtitle("") title("") ytitle("Minutes Spent Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(5)65) 
+coefplot (amlo, fcolor(gs5) finten(20) lcolor(black) keep(_cons)  label("Morning (5 am to 10:59 am)")) (lulo, fcolor(gs5) finten(40) lcolor(black) keep(_cons)  label("Lunch (11 am to 1:59 pm)")) (aflo, fcolor(gs5) finten(60) lcolor(black) keep(_cons)  label("Afternoon (2 pm to 5:59 pm)")) (evlo, fcolor(gs5) finten(80) lcolor(black) keep(_cons)  label("Evening (6 pm to 12 am)")), bylabel("Low-income")||(amhi, fcolor(gs5) finten(20) lcolor(black) keep(_cons)  label("Morning (5 am to 10:59 am)")) (luhi, fcolor(gs5) finten(40) lcolor(black) keep(_cons)  label("Lunch (11 am to 1:59 pm)")) (afhi, fcolor(gs5) finten(60) lcolor(black) keep(_cons)  label("Afternoon (2 pm to 5:59 pm)")) (evhi, fcolor(gs5) finten(80) lcolor(black) keep(_cons)  label("Evening (6 pm to 12 am)")), bylabel("High-income")||, msymbol(O) xlabel("") xtitle("") title("") ytitle("Minutes Spent Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(5)65) 
 
 graph export "figures\fig5.pdf", as(pdf)   replace
 
@@ -101,7 +101,7 @@ reg any_time i.hilowfemale metro travel_all worktime unemployed `timex' [pweight
 margins i.hilowfemale, post
 est sto intfem3
 
-coefplot (intfem, fcolor(gs5) finten(60) lcolor(black)), bylabel("All")||(intfem3, fcolor(gs5) finten(80) lcolor(black)), bylabel("Parents")||, recast(bar) barw(.60) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Using Services") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(0.1)1) nooffset
+coefplot (intfem, fcolor(gs5) finten(60) lcolor(black)), bylabel("All")||(intfem3, fcolor(gs5) finten(80) lcolor(black)), bylabel("Parents")||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Using Services") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(0.1)1) nooffset
 
 graph export "figures\figSI1.pdf", as(pdf)   replace
 
@@ -114,7 +114,7 @@ reg any_waiting i.hilowfemale metro travel_all worktime unemployed `timex' [pwei
 margins i.hilowfemale, post
 est sto intfem3
 
-coefplot (intfem, fcolor(gs5) finten(60) lcolor(black)), bylabel("All")||(intfem3, fcolor(gs5) finten(80) lcolor(black)), bylabel("Parents")||, recast(bar) barw(.60) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(0.05).2) nooffset
+coefplot (intfem, fcolor(gs5) finten(60) lcolor(black)), bylabel("All")||(intfem3, fcolor(gs5) finten(80) lcolor(black)), bylabel("Parents")||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(0.05).2) nooffset
 
 graph export "figures\figSI2.pdf", as(pdf)   replace
 
@@ -127,7 +127,7 @@ reg waiting_all_nz i.hilowfemale metro travel_all worktime unemployed `timex' [p
 margins i.hilowfemale, post
 est sto intfem4
 
-coefplot (intfem2, fcolor(gs5) finten(60) lcolor(black)), bylabel("All")||(intfem4, fcolor(gs5) finten(80) lcolor(black)), bylabel("Parents")||, recast(bar) barw(.60) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting; T| T>0") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(5)70) nooffset
+coefplot (intfem2, fcolor(gs5) finten(60) lcolor(black)), bylabel("All")||(intfem4, fcolor(gs5) finten(80) lcolor(black)), bylabel("Parents")||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting; T| T>0") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(5)70) nooffset
 
 graph export "figures\figSI3.pdf", as(pdf)   replace
 
@@ -140,7 +140,7 @@ est sto m1nc
 xtreg any_waiting i.income_cat metro travel_all worktime `demos' `edu' `family' `timex', fe i(gestfips) cluster(gestfips)
 margins i.income_cat, post
 est sto m1c
-coefplot (m1nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m1c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Likelihood of Any Wait") ylabel(0(0.01).1) recast(bar) barw(.60) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
+coefplot (m1nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m1c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Likelihood of Any Wait") ylabel(0(0.01).1) msymbol(O) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
 
 graph export "figures\figSI4.pdf", as(pdf)   replace
 
@@ -152,7 +152,7 @@ est sto m2nc
 xtreg any_waiting i.income_cat metro unemployed travel_all worktime `demos' `edu' `family' `timex' if any_time == 1, fe i(gestfips) cluster(gestfips)
 margins i.income_cat, post
 est sto m2c
-coefplot (m2nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m2c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Likelihood of Any Wait") ylabel(0(0.01).1) recast(bar) barw(.60) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
+coefplot (m2nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m2c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Likelihood of Any Wait") ylabel(0(0.01).1) msymbol(O) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
 
 graph export "figures\figSI5.pdf", as(pdf)   replace
 
@@ -165,7 +165,7 @@ xtreg waiting_all i.income_cat metro unemployed travel_all worktime `demos' `edu
 margins i.income_cat, post
 est sto m3c
 
-coefplot (m3nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m3c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Minutes Waiting") ylabel(0(0.10)2.25) recast(bar) barw(.60) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
+coefplot (m3nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m3c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Minutes Waiting") ylabel(0(0.10)2.25) msymbol(O) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
 
 graph export "figures\figSI6.pdf", as(pdf)   replace
 
@@ -179,7 +179,7 @@ xtreg waiting_all_nz i.income_cat metro unemployed travel_all worktime `demos' `
 margins i.income_cat, post
 est sto m4c
 
-coefplot (m4nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m4c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Minutes Waiting") ylabel(0(5)55) recast(bar) barw(.60) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
+coefplot (m4nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m4c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Minutes Waiting") ylabel(0(5)55) msymbol(O) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
 
 graph export "figures\figSI7.pdf", as(pdf)   replace
 
@@ -193,7 +193,7 @@ reg waiting_all_nz i.race_cat `income' metro unemployed travel_all worktime `fam
 margins i.race_cat, post
 est sto racewc
 
-coefplot (racenc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No Controls") || (racewc, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls") ||, recast(bar) barw(.40) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting; T| T>0") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(5)70) nooffset
+coefplot (racenc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No Controls") || (racewc, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls") ||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Minutes Spent Waiting; T| T>0") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(5)70) nooffset
 
 graph export "figures\figSI8.pdf", as(pdf)   replace
 
@@ -206,7 +206,7 @@ reg any_waiting i.race_cat `income' metro unemployed travel_all worktime `family
 margins i.race_cat, post
 est sto racewc
 
-coefplot (racenc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No Controls") || (racewc, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls") ||, recast(bar) barw(.40) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(0.01)0.1) nooffset
+coefplot (racenc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No Controls") || (racewc, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls") ||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(0.01)0.1) nooffset
 
 graph export "figures\figSI9.pdf", as(pdf)   replace
 
@@ -219,7 +219,7 @@ reg any_waiting i.race_cat `income' metro unemployed travel_all worktime `family
 margins i.race_cat, post
 est sto racehi
 
-coefplot (racelow, fcolor(gs5) finten(80) lcolor(black)), bylabel("No Controls") || (racehi, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls") ||, recast(bar) barw(.40) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(0.01)0.1) nooffset
+coefplot (racelow, fcolor(gs5) finten(80) lcolor(black)), bylabel("No Controls") || (racehi, fcolor(gs5) finten(80) lcolor(black)), bylabel("Controls") ||, msymbol(O) xlabel(, angle(45)) xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) ylabel(0(0.01)0.1) nooffset
 
 graph export "figures\figSI10.pdf", as(pdf)   replace
 
@@ -251,7 +251,7 @@ reg waiting_ev_nz i.tuyear i.tumonth [pweight=tufnwgtp] if hiloinc == 2 & wkend 
 margins, post
 est sto evhi
 
-coefplot (amlo, fcolor(gs5) finten(20) lcolor(black) keep(_cons) offset(-0.5) label("Morning (5 am to 10:59 am)")) (lulo, fcolor(gs5) finten(40) lcolor(black) keep(_cons) offset(-0.2) label("Lunch (11 am to 1:59 pm)")) (aflo, fcolor(gs5) finten(60) lcolor(black) keep(_cons) offset(0.1) label("Afternoon (2 pm to 5:59 pm)")) (evlo, fcolor(gs5) finten(80) lcolor(black) keep(_cons) offset(0.4) label("Evening (6 pm to 12 am)")), bylabel("Low-income")||(amhi, fcolor(gs5) finten(20) lcolor(black) keep(_cons) offset(-0.5) label("Morning (5 am to 10:59 am)")) (luhi, fcolor(gs5) finten(40) lcolor(black) keep(_cons) offset(-0.2) label("Lunch (11 am to 1:59 pm)")) (afhi, fcolor(gs5) finten(60) lcolor(black) keep(_cons) offset(0.1) label("Afternoon (2 pm to 5:59 pm)")) (evhi, fcolor(gs5) finten(80) lcolor(black) keep(_cons) offset(0.4) label("Evening (6 pm to 12 am)")), bylabel("High-income")||, recast(bar) barw(.20) xlabel("") xtitle("") title("") ytitle("Minutes Spent Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(5)65) 
+coefplot (amlo, fcolor(gs5) finten(20) lcolor(black) keep(_cons)  label("Morning (5 am to 10:59 am)")) (lulo, fcolor(gs5) finten(40) lcolor(black) keep(_cons)  label("Lunch (11 am to 1:59 pm)")) (aflo, fcolor(gs5) finten(60) lcolor(black) keep(_cons)  label("Afternoon (2 pm to 5:59 pm)")) (evlo, fcolor(gs5) finten(80) lcolor(black) keep(_cons)  label("Evening (6 pm to 12 am)")), bylabel("Low-income")||(amhi, fcolor(gs5) finten(20) lcolor(black) keep(_cons)  label("Morning (5 am to 10:59 am)")) (luhi, fcolor(gs5) finten(40) lcolor(black) keep(_cons)  label("Lunch (11 am to 1:59 pm)")) (afhi, fcolor(gs5) finten(60) lcolor(black) keep(_cons)  label("Afternoon (2 pm to 5:59 pm)")) (evhi, fcolor(gs5) finten(80) lcolor(black) keep(_cons)  label("Evening (6 pm to 12 am)")), bylabel("High-income")||, msymbol(O) xlabel("") xtitle("") title("") ytitle("Minutes Spent Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(5)65) 
 
 graph export "figures\figSI11.pdf", as(pdf)   replace
 
@@ -283,7 +283,7 @@ reg any_wait_ev i.tuyear i.tumonth [pweight=tufnwgtp] if hiloinc == 2 & wkend ==
 margins, post
 est sto evhi
 
-coefplot (amlo, fcolor(gs5) finten(20) lcolor(black) keep(_cons) offset(-0.5) label("Morning (5 am to 10:59 am)")) (lulo, fcolor(gs5) finten(40) lcolor(black) keep(_cons) offset(-0.2) label("Lunch (11 am to 1:59 pm)")) (aflo, fcolor(gs5) finten(60) lcolor(black) keep(_cons) offset(0.1) label("Afternoon (2 pm to 5:59 pm)")) (evlo, fcolor(gs5) finten(80) lcolor(black) keep(_cons) offset(0.4) label("Evening (6 pm to 12 am)")), bylabel("Low-income")||(amhi, fcolor(gs5) finten(20) lcolor(black) keep(_cons) offset(-0.5) label("Morning (5 am to 10:59 am)")) (luhi, fcolor(gs5) finten(40) lcolor(black) keep(_cons) offset(-0.2) label("Lunch (11 am to 1:59 pm)")) (afhi, fcolor(gs5) finten(60) lcolor(black) keep(_cons) offset(0.1) label("Afternoon (2 pm to 5:59 pm)")) (evhi, fcolor(gs5) finten(80) lcolor(black) keep(_cons) offset(0.4) label("Evening (6 pm to 12 am)")), bylabel("High-income")||, recast(bar) barw(.20) xlabel("") xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(0.01)0.05) 
+coefplot (amlo, fcolor(gs5) finten(20) lcolor(black) keep(_cons)  label("Morning (5 am to 10:59 am)")) (lulo, fcolor(gs5) finten(40) lcolor(black) keep(_cons)  label("Lunch (11 am to 1:59 pm)")) (aflo, fcolor(gs5) finten(60) lcolor(black) keep(_cons)  label("Afternoon (2 pm to 5:59 pm)")) (evlo, fcolor(gs5) finten(80) lcolor(black) keep(_cons)  label("Evening (6 pm to 12 am)")), bylabel("Low-income")||(amhi, fcolor(gs5) finten(20) lcolor(black) keep(_cons)  label("Morning (5 am to 10:59 am)")) (luhi, fcolor(gs5) finten(40) lcolor(black) keep(_cons)  label("Lunch (11 am to 1:59 pm)")) (afhi, fcolor(gs5) finten(60) lcolor(black) keep(_cons)  label("Afternoon (2 pm to 5:59 pm)")) (evhi, fcolor(gs5) finten(80) lcolor(black) keep(_cons)  label("Evening (6 pm to 12 am)")), bylabel("High-income")||, msymbol(O) xlabel("") xtitle("") title("") ytitle("Probability of Waiting") vertical citop ciopt(recast(rcap) lcolor(black)) ylabel(0(0.01)0.05) 
 
 graph export "figures\figSI12.pdf", as(pdf)   replace
 
