@@ -1,4 +1,12 @@
-**This section codes up time of day for waiting time - replace the path in the cd command to the path where you stored the downloaded data files from the ATUS. This do file assumes all data files are stored in the same path.
+/*
+Update 6/9/2025 - Thanks to a thorough code review from the Institute for Replication, they informed us of an error in our code
+for household income and a minor mismatch between the text and code on the activities included in waiting time. We have corrected
+these errors in the code provided here and are relieved to learn that the errors do not meaningfully impact our results.
+*/
+/*
+This section codes up time of day for waiting time - replace the path in the cd command to the path where you stored the
+downloaded data files from the ATUS. This do file assumes all data files are stored in the same path.
+*/
 cd "C:\\atusdata0319"
 clear all
 set more off
@@ -63,20 +71,25 @@ gen married = 0
 replace married = 1 if pemaritl ==1 | pemaritl==2
 gen metro = 0
 replace metro = 1 if gtmetsta ==1 | gemetsta ==1
-gen loinc = 0
-replace loinc = 1 if hufaminc <= 6 & hryear4 <= 2009 | hefaminc <= 6 & hryear4 >= 2010
-gen inc2040 = 0
-replace inc2040 = 1 if hufaminc >=7 & hufaminc <=10 & hryear4 <= 2009 | hefaminc >=7 & hefaminc <= 10 & hryear4 >= 2010
-gen inc4060 = 0
-replace inc4060 = 1 if hufaminc >= 11 & hufaminc <= 12 & hryear4 <=2009 | hefaminc >= 11 &hefaminc <= 12 & hryear >=2010
-gen inc6075 = 0
-replace inc6075 = 1 if hufaminc == 13 & hryear4 <= 2009 | hefaminc == 13 & hryear4 >= 2010
-gen inc75100 = 0
-replace inc75100 = 1 if hufaminc == 14 & hryear4 <= 2009 | hefaminc == 14 & hryear4 >= 2010
-gen inc100150 = 0
-replace inc100150 = 1 if hufaminc == 15 & hryear4 <= 2009 | hefaminc == 15 & hryear4 >= 2010
-gen inc150p = 0
-replace inc150p = 1 if hufaminc == 16 & hryear4 <= 2009 | hefaminc == 16 & hryear4 >= 2010
+***Corrected income variables after Replication Institute review
+gen hhincome1 = .
+replace hhincome1 = 1 if (hufaminc <= 6 & hryear4 <= 2009 & hufaminc >= 0) | (hefaminc <= 6 & hryear4 >= 2010 & hefaminc >= 0)
+replace hhincome1 = 2 if (hufaminc >=7 & hufaminc <=10 & hryear4 <= 2009 & hufaminc >= 0) | (hefaminc >=7 & hefaminc <= 10 & hryear4 >= 2010 & hefaminc >= 0)
+replace hhincome1 = 3 if (hufaminc >= 11 & hufaminc <= 12 & hryear4 <=2009 & hufaminc >= 0) | (hefaminc >= 11 &hefaminc <= 12 & hryear >=2010 & hefaminc >= 0)
+replace hhincome1 = 4 if (hufaminc == 13 & hryear4 <= 2009 & hufaminc >= 0) | (hefaminc == 13 & hryear4 >= 2010 & hefaminc >= 0)
+replace hhincome1 = 5 if (hufaminc == 14 & hryear4 <= 2009 & hufaminc >= 0) | (hefaminc == 14 & hryear4 >= 2010 & hefaminc >= 0)
+replace hhincome1 = 6 if (hufaminc == 15 & hryear4 <= 2009 & hufaminc >= 0) | (hefaminc == 15 & hryear4 >= 2010 & hefaminc >= 0)
+replace hhincome1 = 7 if (hufaminc == 16 & hryear4 <= 2009 & hufaminc >= 0) | (hefaminc == 16 & hryear4 >= 2010 & hefaminc >= 0)
+recode hhincome1 (1=1 "<=20K")(2=2 "20K-40K")(3=3 "40K-60K")(4=4 "60K-75K")(5=5 "75K-100K")(6=6 "100K-150K")(7=7 "150K"), gen(hhincome)
+tab hhincome, gen(hhinc)
+label var hhinc1 "<=20K"
+label var hhinc2 "20K-40K"
+label var hhinc3 "40K-60K"
+label var hhinc4 "60K-75K"
+label var hhinc5 "75K-100K"
+label var hhinc6 "100K-150K"
+label var hhinc7 "150K"
+***
 gen nopartner = 0
 replace nopartner = 1 if partner == 0
 gen partnohsdip = 0
@@ -252,13 +265,13 @@ replace afternoon = 1 if (starttime_num >= 14 & starttime_num < 18)
 gen evening = 0
 replace evening = 1 if (starttime_num >= 18 & starttime_num <= 24)
 
-egen waiting_am1 = sum(tuactdur24) if ((trcodep == 030204 | trcodep == 030303 | trcodep == 030405 | trcodep == 040204 | trcodep == 040303 | trcodep == 040405 | trcodep == 040508 | trcodep == 060103 | trcodep == 060403 | trcodep == 070105 | trcodep == 080102 | trcodep == 080203 | trcodep == 080302 | trcodep == 080403 | trcodep == 080502 | trcodep == 090104 | trcodep == 090202 | trcodep == 100381 | trcodep == 100383 | trcodep == 100399) & (am == 1)), by(tucaseid)
+egen waiting_am1 = sum(tuactdur24) if ((trcodep == 030204 | trcodep == 030303 | trcodep == 030405 | trcodep == 040204 | trcodep == 040303 | trcodep == 040405 | trcodep == 060103 | trcodep == 060403 | trcodep == 070105 | trcodep == 080102 | trcodep == 080203 | trcodep == 080302 | trcodep == 080403 | trcodep == 080502 | trcodep == 090104 | trcodep == 090202 | trcodep == 100381 | trcodep == 100383 | trcodep == 100399 | trcodep == 090402) & (am == 1)), by(tucaseid)
 egen waiting_am = max(waiting_am1), by(tucaseid)
-egen waiting_lu1 = sum(tuactdur24) if ((trcodep == 030204 | trcodep == 030303 | trcodep == 030405 | trcodep == 040204 | trcodep == 040303 | trcodep == 040405 | trcodep == 040508 | trcodep == 060103 | trcodep == 060403 | trcodep == 070105 | trcodep == 080102 | trcodep == 080203 | trcodep == 080302 | trcodep == 080403 | trcodep == 080502 | trcodep == 090104 | trcodep == 090202 | trcodep == 100381 | trcodep == 100383 | trcodep == 100399) & (lunch == 1)), by(tucaseid)
+egen waiting_lu1 = sum(tuactdur24) if ((trcodep == 030204 | trcodep == 030303 | trcodep == 030405 | trcodep == 040204 | trcodep == 040303 | trcodep == 040405 | trcodep == 060103 | trcodep == 060403 | trcodep == 070105 | trcodep == 080102 | trcodep == 080203 | trcodep == 080302 | trcodep == 080403 | trcodep == 080502 | trcodep == 090104 | trcodep == 090202 | trcodep == 100381 | trcodep == 100383 | trcodep == 100399 | trcodep == 090402) & (lunch == 1)), by(tucaseid)
 egen waiting_lu = max(waiting_lu1), by(tucaseid)
-egen waiting_af1 = sum(tuactdur24) if ((trcodep == 030204 | trcodep == 030303 | trcodep == 030405 | trcodep == 040204 | trcodep == 040303 | trcodep == 040405 | trcodep == 040508 | trcodep == 060103 | trcodep == 060403 | trcodep == 070105 | trcodep == 080102 | trcodep == 080203 | trcodep == 080302 | trcodep == 080403 | trcodep == 080502 | trcodep == 090104 | trcodep == 090202 | trcodep == 100381 | trcodep == 100383 | trcodep == 100399) & (afternoon == 1)), by(tucaseid)
+egen waiting_af1 = sum(tuactdur24) if ((trcodep == 030204 | trcodep == 030303 | trcodep == 030405 | trcodep == 040204 | trcodep == 040303 | trcodep == 040405 | trcodep == 060103 | trcodep == 060403 | trcodep == 070105 | trcodep == 080102 | trcodep == 080203 | trcodep == 080302 | trcodep == 080403 | trcodep == 080502 | trcodep == 090104 | trcodep == 090202 | trcodep == 100381 | trcodep == 100383 | trcodep == 100399 | trcodep == 090402) & (afternoon == 1)), by(tucaseid)
 egen waiting_af = max(waiting_af1), by(tucaseid)
-egen waiting_ev1 = sum(tuactdur24) if ((trcodep == 030204 | trcodep == 030303 | trcodep == 030405 | trcodep == 040204 | trcodep == 040303 | trcodep == 040405 | trcodep == 040508 | trcodep == 060103 | trcodep == 060403 | trcodep == 070105 | trcodep == 080102 | trcodep == 080203 | trcodep == 080302 | trcodep == 080403 | trcodep == 080502 | trcodep == 090104 | trcodep == 090202 | trcodep == 100381 | trcodep == 100383 | trcodep == 100399) & (evening == 1)), by(tucaseid)
+egen waiting_ev1 = sum(tuactdur24) if ((trcodep == 030204 | trcodep == 030303 | trcodep == 030405 | trcodep == 040204 | trcodep == 040303 | trcodep == 040405 | trcodep == 060103 | trcodep == 060403 | trcodep == 070105 | trcodep == 080102 | trcodep == 080203 | trcodep == 080302 | trcodep == 080403 | trcodep == 080502 | trcodep == 090104 | trcodep == 090202 | trcodep == 100381 | trcodep == 100383 | trcodep == 100399 | trcodep == 090402) & (evening == 1)), by(tucaseid)
 egen waiting_ev = max(waiting_ev1), by(tucaseid)
 
 keep tucaseid waiting_am waiting_lu waiting_af waiting_ev
@@ -313,8 +326,9 @@ rename t100381 waiting_gov
 rename t100383 waiting_civic
 rename t100399 waiting_gov_undef
 
-gen waiting_all = (waiting_gov + waiting_civic + waiting_gov_undef + waiting_hhservice + waiting_personalcare + waiting_medical + waiting_legal + waiting_finance + waiting_childcare + waiting_shopping + waiting_educadmin + waiting_class + waiting_nonhhadult + waiting_nonhhchhlth + waiting_nonhhchedu + waiting_hhadults + waiting_hhadcare + waiting_hhchhth + waiting_hhchedu + waiting_hmaint + waiting_nonhhadhlp)
-
+***Create strict text definition of waiting to correct for mismatch. Adds lawn services and drops helping houshold and nonhousehold adults as categories of waiting to be included.
+gen waiting_all = (waiting_gov + waiting_civic + waiting_gov_undef + waiting_hhservice + waiting_personalcare + waiting_medical + waiting_legal + waiting_finance + waiting_childcare + waiting_shopping + waiting_educadmin + waiting_class + waiting_nonhhadult + waiting_nonhhchhlth + waiting_nonhhchedu + waiting_hhadcare + waiting_hhchhth + waiting_hhchedu + waiting_hmaint + waiting_lawn)
+***
 gen waiting_meds = (waiting_medical + waiting_hhchhth)
 
 gen waiting_consumption = (waiting_shopping + waiting_personalcare)
@@ -336,8 +350,9 @@ gen travel_vet = t180807
 gen travel_household = (t180901 + t180902 + t180903 + t180904 + t180905 + t180999)
 gen travel_gov = (t181002 + t181081 + t181099)
 
-gen travel_all = (travel_hhcare + travel_nonhhcare + travel_educ + travel_shopping + travel_childcare + travel_financial + travel_legal + travel_medical + travel_personalcare + travel_household + travel_gov)
-
+***Travel control for correcting waiting time for matching text definition of waiting.
+gen travel_all = (t180904 + travel_hhcare + travel_nonhhcare + travel_educ + travel_shopping + travel_childcare + travel_financial + travel_legal + travel_medical + travel_personalcare + travel_household + travel_gov)
+***
 gen travel_med = (travel_hhcare + travel_medical)
 
 foreach x of varlist waiting_all waiting_shopping waiting_meds travel_all worktime{
@@ -363,8 +378,9 @@ gen hhservice = (t090101 + t090102 + t090103 + t090199)
 gen hhmaintence = (t090201 + t090299)
 gen gov_time = (t100101 + t100102 + t100103 + t100199 + t100201 + t100299 + t109999)
 
+**Create indicators to match the strict textual definition of waiting.
 gen any_time = 0
-replace any_time = 1 if (care_hhchildedu > 0 | care_hhchildhlth > 0 | care_hhadultshlth > 0 | care_hhadultsaid > 0 | care_nonhhchiedu > 0 | care_nonhhchihlth > 0 | care_nonhhadults > 0 | class_time > 0 | educ_admin > 0 | shopping > 0 | childcare > 0 | financial > 0 | legal > 0 | medical > 0 | personal_care > 0 | hhservice > 0 | hhmaintence > 0 | gov_time > 0)
+replace any_time = 1 if (care_hhchildedu > 0 | care_hhchildhlth > 0 | care_hhadultshlth > 0 | care_nonhhchiedu > 0 | care_nonhhchihlth > 0 | care_nonhhadults > 0 | class_time > 0 | educ_admin > 0 | shopping > 0 | childcare > 0 | financial > 0 | legal > 0 | medical > 0 | personal_care > 0 | hhservice > 0 | hhmaintence > 0 | gov_time > 0 | lawn_service > 0)
 
 gen age = teage
 
@@ -458,8 +474,8 @@ gen any_wait_ev = 0
 replace any_wait_ev = 1 if waiting_ev > 0
 
 gen hiloinc = .
-replace hiloinc = 1 if loinc == 1
-replace hiloinc = 2 if inc150p == 1
+replace hiloinc = 1 if hhinc1 == 1
+replace hiloinc = 2 if hhinc7 == 1
 
 gen hilowfemale = .
 replace hilowfemale = 1 if hiloinc == 1 & female == 0
