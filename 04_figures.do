@@ -1,8 +1,8 @@
 use "atusall0319.dta"
 
-local summaryx any_waiting waiting_all waiting_all_nz travel_all loinc inc2040 inc4060 inc6075 inc75100 inc100150 inc150p white black native asian pacisl multi otherrc hisp age female male nohsdip hsdip somcol coldeg married hhchild yngchild metro
+local summaryx any_waiting waiting_all waiting_all_nz travel_all hhinc1 hhinc2 hhinc3 hhinc4 hhinc5 hhinc6 hhinc7 white black native asian pacisl multi otherrc hisp age female male nohsdip hsdip somcol coldeg married hhchild yngchild metro
 local timex yr2004 yr2005 yr2006 yr2007 yr2008 yr2009 yr2010 yr2011 yr2012 yr2013 yr2014 yr2015 yr2016 yr2017 yr2018 yr2019 feb mar apr may jun jul aug sep oct nov dec mon tue wed thr fri sat
-local income loinc inc2040 inc4060 inc6075 inc75100 inc100150 
+local income hhinc1 hhinc2 hhinc3 hhinc4 hhinc5 hhinc6
 local demos  black native asian pacisl multi otherrc hisp age female
 local edu hsdip somcol coldeg unemployed
 local family married hhchild yngchild
@@ -133,36 +133,36 @@ graph export "figures\figSI3.pdf", as(pdf)   replace
 
 
 **Figure SI 4
-reg any_waiting i.income_cat `timex', cluster(gestfips)
-margins i.income_cat, post
+reg any_waiting i.hhincome `timex', cluster(gestfips)
+margins i.hhincome, post
 est sto m1nc
 
-xtreg any_waiting i.income_cat metro travel_all worktime `demos' `edu' `family' `timex', fe i(gestfips) cluster(gestfips)
-margins i.income_cat, post
+xtreg any_waiting i.hhincome metro travel_all worktime `demos' `edu' `family' `timex', fe i(gestfips) cluster(gestfips)
+margins i.hhincome, post
 est sto m1c
 coefplot (m1nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m1c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Likelihood of Any Wait") ylabel(0(0.01).1) msymbol(O) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
 
 graph export "figures\figSI4.pdf", as(pdf)   replace
 
 **Figure SI 5
-reg any_waiting i.income_cat `timex' if any_time == 1, cluster(gestfips)
-margins i.income_cat, post
+reg any_waiting i.hhincome `timex' if any_time == 1, cluster(gestfips)
+margins i.hhincome, post
 est sto m2nc
 
-xtreg any_waiting i.income_cat metro unemployed travel_all worktime `demos' `edu' `family' `timex' if any_time == 1, fe i(gestfips) cluster(gestfips)
-margins i.income_cat, post
+xtreg any_waiting i.hhincome metro unemployed travel_all worktime `demos' `edu' `family' `timex' if any_time == 1, fe i(gestfips) cluster(gestfips)
+margins i.hhincome, post
 est sto m2c
 coefplot (m2nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m2c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Likelihood of Any Wait") ylabel(0(0.01).1) msymbol(O) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
 
 graph export "figures\figSI5.pdf", as(pdf)   replace
 
 **Figure SI 6
-reg waiting_all i.income_cat `timex', cluster(gestfips)
-margins i.income_cat, post
+reg waiting_all i.hhincome `timex', cluster(gestfips)
+margins i.hhincome, post
 est sto m3nc
 
-xtreg waiting_all i.income_cat metro unemployed travel_all worktime `demos' `edu' `family' `timex', fe i(gestfips) cluster(gestfips)
-margins i.income_cat, post
+xtreg waiting_all i.hhincome metro unemployed travel_all worktime `demos' `edu' `family' `timex', fe i(gestfips) cluster(gestfips)
+margins i.hhincome, post
 est sto m3c
 
 coefplot (m3nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m3c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Minutes Waiting") ylabel(0(0.10)2.25) msymbol(O) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
@@ -171,12 +171,12 @@ graph export "figures\figSI6.pdf", as(pdf)   replace
 
 
 **Figure SI 7
-reg waiting_all_nz i.income_cat `timex', cluster(gestfips)
-margins i.income_cat, post
+reg waiting_all_nz i.hhincome `timex', cluster(gestfips)
+margins i.hhincome, post
 est sto m4nc
 
-xtreg waiting_all_nz i.income_cat metro unemployed travel_all worktime `demos' `edu' `family' `timex', fe i(gestfips) cluster(gestfips)
-margins i.income_cat, post
+xtreg waiting_all_nz i.hhincome metro unemployed travel_all worktime `demos' `edu' `family' `timex', fe i(gestfips) cluster(gestfips)
+margins i.hhincome, post
 est sto m4c
 
 coefplot (m4nc, fcolor(gs5) finten(80) lcolor(black)), bylabel("No controls")||(m4c, fcolor(gs5) finten(80) lcolor(black)), bylabel("All controls")||, ytitle("Minutes Waiting") ylabel(0(5)55) msymbol(O) xlabel(, angle(45)) xtitle("") title("") vertical citop ciopt(recast(rcap) lcolor(black)) byopts(legend(off)) nooffset
