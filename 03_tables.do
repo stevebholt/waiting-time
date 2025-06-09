@@ -1,8 +1,8 @@
 use "atusall0319.dta"
 
-local summaryx any_waiting waiting_all waiting_all_nz travel_all loinc inc2040 inc4060 inc6075 inc75100 inc100150 inc150p white black native asian pacisl multi otherrc hisp age female male nohsdip hsdip somcol coldeg married hhchild yngchild metro
+local summaryx any_waiting waiting_all waiting_all_nz travel_all hhinc1 hhinc2 hhinc3 hhinc4 hhinc5 hhinc6 hhinc7 white black native asian pacisl multi otherrc hisp age female male nohsdip hsdip somcol coldeg married hhchild yngchild metro
 local timex yr2004 yr2005 yr2006 yr2007 yr2008 yr2009 yr2010 yr2011 yr2012 yr2013 yr2014 yr2015 yr2016 yr2017 yr2018 yr2019 feb mar apr may jun jul aug sep oct nov dec mon tue wed thr fri sat
-local income loinc inc2040 inc4060 inc6075 inc75100 inc100150 
+local income hhinc1 hhinc2 hhinc3 hhinc4 hhinc5 hhinc6 
 local demos  black native asian pacisl multi otherrc hisp age female
 local edu hsdip somcol coldeg unemployed
 local family married hhchild yngchild
@@ -87,25 +87,25 @@ log using "logs\summary.log", replace
 
 estpost tabstat `summaryx' [aweight=tufnwgtp], statistics(mean sd count) columns(statistics)
 est sto sumall
-estpost tabstat `summaryx' [aweight=tufnwgtp] if loinc == 1, statistics(mean sd count) columns(statistics)
+estpost tabstat `summaryx' [aweight=tufnwgtp] if hhinc1 == 1, statistics(mean sd count) columns(statistics)
 est sto sumlow
-estpost tabstat `summaryx' [aweight=tufnwgtp] if inc150p == 1, statistics(mean sd count) columns(statistics)
+estpost tabstat `summaryx' [aweight=tufnwgtp] if hhinc7 == 1, statistics(mean sd count) columns(statistics)
 est sto sumhigh
-estpost tabstat `summaryx' [aweight=tufnwgtp] if loinc == 1 & any_time == 1, statistics(mean sd count) columns(statistics)
+estpost tabstat `summaryx' [aweight=tufnwgtp] if hhinc1 == 1 & any_time == 1, statistics(mean sd count) columns(statistics)
 est sto sumlowany
-estpost tabstat `summaryx' [aweight=tufnwgtp] if inc150p == 1 & any_time == 1, statistics(mean sd count) columns(statistics)
+estpost tabstat `summaryx' [aweight=tufnwgtp] if hhinc7 == 1 & any_time == 1, statistics(mean sd count) columns(statistics)
 est sto sumhighany
-estpost tabstat `summaryx' [aweight=tufnwgtp] if loinc == 1 & waiting_all > 0, statistics(mean sd count) columns(statistics)
+estpost tabstat `summaryx' [aweight=tufnwgtp] if hhinc1 == 1 & waiting_all > 0, statistics(mean sd count) columns(statistics)
 est sto sumlownz
-estpost tabstat `summaryx' [aweight=tufnwgtp] if inc150p == 1 & waiting_all > 0, statistics(mean sd count) columns(statistics)
+estpost tabstat `summaryx' [aweight=tufnwgtp] if hhinc7 == 1 & waiting_all > 0, statistics(mean sd count) columns(statistics)
 est sto sumhighnz
 
 esttab sumall sumlow sumhigh sumlowany sumhighany sumlownz sumhighnz using "output\t1", cell(mean(fmt(2)) sd(par)) label unstack compress obslast tex mtitles("All" "Low income" "High income") addnotes("Standard deviations in parentheses; the statistical significance of mean differences between high and low income respondents is tested using t tests. *p < .10 **p < .05 ***p < .01.") replace
 
 foreach x of varlist `summaryx'{
-	reg `x' inc150p [pweight=tufnwgtp] if (inc150p == 1 | loinc == 1), r
-	reg `x' inc150p [pweight=tufnwgtp] if (inc150p == 1 | loinc == 1) & any_time == 1, r
-	reg `x' inc150p [pweight=tufnwgtp] if (inc150p == 1 | loinc == 1) & waiting_all > 0, r
+	reg `x' inc150p [pweight=tufnwgtp] if (hhinc7 == 1 | hhinc1 == 1), r
+	reg `x' inc150p [pweight=tufnwgtp] if (hhinc7 == 1 | hhinc1 == 1) & any_time == 1, r
+	reg `x' inc150p [pweight=tufnwgtp] if (hhinc7 == 1 | hhinc1 == 1) & waiting_all > 0, r
 }
 
 log close
